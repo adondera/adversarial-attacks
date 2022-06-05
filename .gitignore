@@ -132,3 +132,4 @@ dmypy.json
 *imagenet*
 train
 training_pictures
+wandb

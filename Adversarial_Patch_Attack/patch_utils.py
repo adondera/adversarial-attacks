@@ -40,26 +40,26 @@ def mask_generation(mask_type='rectangle', patch=None, image_size=(3, 224, 224))
 
 
 # Test the patch on dataset
+# TODO: Check this function
 def test_patch(patch_type, target, patch, test_loader, model):
     model.eval()
-    test_total, test_actual_total, test_success = 0, 0, 0
+    test_actual_total, test_success = 0, 0
     for (image, label) in test_loader:
-        test_total += label.shape[0]
         assert image.shape[0] == 1, 'Only one picture should be loaded each time.'
-        image = image.cuda()
-        label = label.cuda()
+        image = image
+        label = label
         output = model(image)
         _, predicted = torch.max(output.data, 1)
-        if predicted[0] != label and predicted[0].data.cpu().numpy() != target:
+        if predicted[0].item() != label.item() and predicted[0].data.cpu().numpy() != target:
             test_actual_total += 1
             applied_patch, mask, x_location, y_location = mask_generation(patch_type, patch, image_size=(3, 224, 224))
             applied_patch = torch.from_numpy(applied_patch)
             mask = torch.from_numpy(mask)
-            perturbated_image = torch.mul(mask.type(torch.FloatTensor),
-                                          applied_patch.type(torch.FloatTensor)) + torch.mul(
+            changed_image = torch.mul(mask.type(torch.FloatTensor),
+                                      applied_patch.type(torch.FloatTensor)) + torch.mul(
                 (1 - mask.type(torch.FloatTensor)), image.type(torch.FloatTensor))
-            perturbated_image = perturbated_image.cuda()
-            output = model(perturbated_image)
+            changed_image = changed_image.cuda()
+            output = model(changed_image)
             _, predicted = torch.max(output.data, 1)
             if predicted[0].data.cpu().numpy() == target:
                 test_success += 1
