@@ -7,6 +7,8 @@ import torch
 import torchvision
 import torchvision.transforms as transforms
 import tqdm
+import wandb
+import numpy as np
 from torch.utils.data import DataLoader
 from torch.utils.data.sampler import SubsetRandomSampler
 
@@ -35,6 +37,12 @@ def dataloader(train_size, test_size, data_dir, batch_size, device, total_num=50
     np.random.shuffle(index)
     train_index = index[:train_size]
     test_index = index[train_size: (train_size + test_size)]
+
+    # wandb.run.summary['train_index'] = train_index
+    # wandb.run.summary['test_index'] = test_index
+    #
+    # np.save("train_index.npy", train_index)
+    # np.save("test_index.npy", test_index)
 
     train_dataset = torchvision.datasets.ImageFolder(root=data_dir, transform=train_transforms)
     test_dataset = torchvision.datasets.ImageFolder(root=data_dir, transform=test_transforms)

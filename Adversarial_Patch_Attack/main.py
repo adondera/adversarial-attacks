@@ -31,7 +31,7 @@ model.to(device)
 model.eval()
 
 config = default_params()
-config["train_size"] = 2000
+config["train_size"] = 4000
 config["test_size"] = 2000  # TODO Replace these with higher numbers
 config["patch_size"] = 0.05
 
@@ -46,12 +46,6 @@ train_loader, test_loader = dataloader(
     device=device,
     total_num=50000)
 
-# Test the accuracy of model on trainset and testset
-# train_acc, test_acc = test(model, train_loader), test(model, test_loader)
-# print('Accuracy of the model on clean train and test sets is {:.3f}% and {:.3f}%'.format(100 * train_acc,
-#                                                                                          100 * test_acc))
-
-
 # Initialize the patch
 patch = patch_initialization(config["patch_shape"], image_size=(3, 224, 224), noise_percentage=config["patch_size"])
 print('The shape of the patch is', patch.shape)
@@ -65,7 +59,7 @@ for epoch in tqdm.tqdm(range(config["epochs"])):
         assert image.shape[0] == 1, 'Only one picture should be loaded each time.'
         output = model(image)
         _, initial_prediction = torch.max(output.data, 1)
-        if initial_prediction[0].item() != label.item() and \
+        if initial_prediction[0].item() == label.item() and \
                 initial_prediction[0].data.cpu().numpy() != config["target"]:
             train_actual_total += 1
             applied_patch, mask, x_location, y_location = mask_generation(config["patch_shape"], patch,
@@ -81,11 +75,11 @@ for epoch in tqdm.tqdm(range(config["epochs"])):
             patch = applied_patch[0][:, x_location:x_location + patch.shape[1], y_location:y_location + patch.shape[2]]
     mean, std = [0.485, 0.456, 0.406], [0.229, 0.224, 0.225]
     plt.imshow(np.clip(np.transpose(patch, (1, 2, 0)) * std + mean, 0, 1))
-    plt.show()
+    # plt.show()
     plt.savefig("training_pictures/" + str(epoch) + " patch.png")
-    print("Epoch:{} Patch attack success rate on trainset: {:.3f}%".format(epoch,
-                                                                           100 * train_success / train_actual_total))
-    train_success_rate = test_patch(config["patch_shape"], config["target"], patch, test_loader, model)
+    print("Epoch:{} Patch attack success rate on trainset per image: {:.3f}%".
+          format(epoch, 100 * train_success / train_actual_total))
+    train_success_rate = test_patch(config["patch_shape"], config["target"], patch, train_loader, model)
     print("Epoch:{} Patch attack success rate on trainset: {:.3f}%".format(epoch, 100 * train_success_rate))
     test_success_rate = test_patch(config["patch_shape"], config["target"], patch, test_loader, model)
     print("Epoch:{} Patch attack success rate on testset: {:.3f}%".format(epoch, 100 * test_success_rate))
@@ -100,7 +94,7 @@ for epoch in tqdm.tqdm(range(config["epochs"])):
     })
 
     # Load the statistics and generate the line
-    logs.plot()
+    # logs.plot()
     logs.save_log()
 
     if test_success_rate > best_patch_success_rate:

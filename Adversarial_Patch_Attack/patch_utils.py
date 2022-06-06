@@ -50,7 +50,7 @@ def test_patch(patch_type, target, patch, test_loader, model):
         label = label
         output = model(image)
         _, predicted = torch.max(output.data, 1)
-        if predicted[0].item() != label.item() and predicted[0].data.cpu().numpy() != target:
+        if predicted[0].item() == label.item() and predicted[0].data.cpu().numpy() != target:
             test_actual_total += 1
             applied_patch, mask, x_location, y_location = mask_generation(patch_type, patch, image_size=(3, 224, 224))
             applied_patch = torch.from_numpy(applied_patch)

@@ -1,5 +1,4 @@
 import torch
-import numpy as np
 import torchvision.transforms as transforms
 from torchvision.models import resnet50
 from pytorch_grad_cam.utils.model_targets import ClassifierOutputTarget
