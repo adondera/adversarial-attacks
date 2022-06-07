@@ -215,7 +215,7 @@ def l2_attack(input, target, model, targeted, use_log, use_tanh, solver, reset_a
                 const *= 10
             print('new constant: ', const)
 
-    return out_best_attack, out_bestscore
+    return out_best_attack, out_bestscore, real_modifier.clone().detach().cpu().numpy()
 
 def generate_data(test_loader,targeted,samples,start):
     inputs=[]
@@ -249,16 +249,19 @@ def generate_data(test_loader,targeted,samples,start):
     return inputs,targets
 
 def attack(inputs, targets, model, targeted, use_log, use_tanh, solver, device):
-    runs = []
+    
+    attacks = []
+    perturbations = []
+
     print("Running on first of {} images ".format(len(inputs)))
 
     # run 1 image at a time, minibatches used for gradient evaluation
     for i in range(len(inputs)):
         print("======== Image %d =========" % (i+1))
-        attack,score=l2_attack(np.expand_dims(inputs[i],0), np.expand_dims(targets[i],0), model, targeted, use_log, use_tanh, solver)
-        runs.append(attack)
-    
-    return np.array(runs)
+        attack,score, pertub=l2_attack(np.expand_dims(inputs[i],0), np.expand_dims(targets[i],0), model, targeted, use_log, use_tanh, solver)
+        attacks.append(attack)
+        perturbations.append(pertub)
+    return np.array(attacks), np.array(perturbations)
 
 def zoo_attack(model, dataloader, num_samples=1):
     # start is a offset to start taking sample from test set
@@ -273,23 +276,29 @@ def zoo_attack(model, dataloader, num_samples=1):
     model.eval()
 
     timestart = time.time()
-    adv = attack(inputs, targets, model, targeted, use_log, use_tanh, solver, device)
+    adversarial, pertub = attack(inputs, targets, model, targeted, use_log, use_tanh, solver, device)
     timeend = time.time()
     print("Took",(timeend-timestart)/60.0,"mins to run",len(inputs),"samples.")
 
     if use_log:
-        valid_class = np.argmax(F.softmax(model(torch.from_numpy(inputs).cuda()),-1).detach().cpu().numpy(),-1)
-        adv_class = np.argmax(F.softmax(model(torch.from_numpy(adv).cuda()),-1).detach().cpu().numpy(),-1)
+        valid_outs = F.softmax(model(torch.from_numpy(inputs).cuda()),-1).detach().cpu().numpy()
+        valid_class = np.argmax(valid_outs, -1)
+        adv_outs = F.softmax(model(torch.from_numpy(adversarial).cuda()),-1).detach().cpu().numpy()
+        adv_class = np.argmax(adv_outs, -1)
 
     else:
-        valid_class = np.argmax(model(torch.from_numpy(inputs).cuda()).detach().cpu().numpy(),-1)
-        adv_class = np.argmax(model(torch.from_numpy(adv).cuda()).detach().cpu().numpy(),-1)
+        valid_outs = model(torch.from_numpy(inputs).cuda()).detach().cpu().numpy()
+        valid_class = np.argmax(valid_outs,-1)
+        adv_outs = model(torch.from_numpy(adversarial).cuda()).detach().cpu().numpy()
+        adv_class = np.argmax(adv_outs,-1)
     
     acc = ((valid_class==adv_class).sum())/len(inputs)
     print("Valid Classification: ", valid_class)
     print("Adversarial Classification: ", adv_class)
     print("Success Rate: ", (1.0-acc)*100.0)
-    print("Total distortion: ", np.sum((adv-inputs)**2)**.5)
+    print("Total distortion: ", np.sum((adversarial-inputs)**2)**.5)
+
+    return adversarial, pertub, inputs, targets, valid_outs, adv_outs
 
 if __name__=='__main__':
     pass

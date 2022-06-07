@@ -12,6 +12,7 @@ use_cuda=True
 
 device = torch.device("cuda" if (use_cuda and torch.cuda.is_available()) else "cpu")
 
+orig_scores = None
 
 def attack_untargeted(model, train_dataset, x0, y0, alpha = 0.2, beta = 0.001):
     """ Attack the original image and return adversarial example
@@ -20,9 +21,14 @@ def attack_untargeted(model, train_dataset, x0, y0, alpha = 0.2, beta = 0.001):
         (x0, y0): original image
     """
 
-    if (predict(model, x0) != y0):
+    global orig_scores
+
+    predicted, orig_scores = predict(model, x0, return_score=True)
+    print("Predicted label: ", predicted)
+
+    if (predicted != y0):
         print("Fail to classify the image. No need to attack.")
-        return x0
+        return x0, None
 
     num_samples = 10
     best_theta = None
@@ -83,7 +89,7 @@ def attack_untargeted(model, train_dataset, x0, y0, alpha = 0.2, beta = 0.001):
     target = predict(model, now_o)
     timeend = time.time()
     print("\nAdversarial Example Found Successfully: distortion %.4f target %d queries %d \nTime: %.4f seconds" % (distortion, target, query_count + iterations, timeend-timestart))
-    return x0+now_o
+    return x0+now_o, now_o
 
 def fine_grained_binary_search_local(model, x0, y0, theta, initial_lbd = 1.0):
     nquery = 0
@@ -157,7 +163,7 @@ def fine_grained_binary_search(model, x0, y0, theta, initial_lbd = 1.0):
 
     return lbd_hi, nquery
 
-def predict(model, image):
+def predict(model, image, return_score=False):
     image = torch.clamp(image,0,1)
     image = Variable(image)
     if torch.cuda.is_available():
@@ -165,7 +171,11 @@ def predict(model, image):
     with torch.no_grad():
         output = model(image)
         _, predict = torch.max(output.data, 1)
-    return predict
+
+    if return_score:
+        return predict, output
+    else:
+        return predict
 
 def boundary_attack(model, dataloader, num_samples=1):
 
@@ -174,27 +184,28 @@ def boundary_attack(model, dataloader, num_samples=1):
 
     print("Running on first {} images ".format(num_samples))
 
+    attack_done = False
+
     for i, (image, label) in enumerate(dataloader):
         image, label = image.to(device), label.to(device)
 
         print("======== Image %d =========" % i)
         print("Original label: ", label)
-        predicted = predict(model, image)
-        print("Predicted label: ", predicted)
 
-        if label != predicted:
-            continue
+        adversarial, pertub = attack_untargeted(model, dataloader, image, label, alpha = alpha, beta = beta)
 
-        print("Correctly classified, look for adversarial samples")
-        adversarial = attack_untargeted(model, dataloader, image, label, alpha = alpha, beta = beta)
-        print("Predicted label for adversarial example: ", predict(model, adversarial))
-        print("Original label: ", label)
+        if pertub is not None:
+            predicted, adv_scores = predict(model, adversarial, return_score=True)
+            print("Predicted label for adversarial example: ", predicted)
+            print("Original label: ", label)
 
-        if (i+1) >= num_samples:
+            attack_done = True
+
+        if (i+1) >= num_samples and attack_done:
             print("Breaking execution")
             break
     
-    return adversarial
+    return adversarial, pertub, image, label, orig_scores, adv_scores
 
 if __name__ == '__main__':
     pass

@@ -1,0 +1,55 @@
+Running on first of 1 images 
+======== Image 1 =========
+[STATS][L2] iter = 100, loss = 802.48824, loss1 = 802.42828, loss2 = 0.05995
+[STATS][L2] iter = 200, loss = 1691.04734, loss1 = 1690.98474, loss2 = 0.06260
+Early stopping because there is no improvement
+old constant:  0.01
+new constant:  0.1
+[STATS][L2] iter = 100, loss = 2555.55350, loss1 = 2554.95337, loss2 = 0.60014
+[STATS][L2] iter = 200, loss = 3388.66801, loss1 = 3388.08350, loss2 = 0.58451
+Early stopping because there is no improvement
+old constant:  0.1
+new constant:  1.0
+[STATS][L2] iter = 100, loss = 4215.56582, loss1 = 4210.08594, loss2 = 5.47988
+[STATS][L2] iter = 200, loss = 5050.74057, loss1 = 5045.85938, loss2 = 4.88119
+Early stopping because there is no improvement
+old constant:  1.0
+new constant:  10.0
+[STATS][L2] iter = 100, loss = 5900.52901, loss1 = 5852.72656, loss2 = 47.80245
+[STATS][L2] iter = 200, loss = 6713.74089, loss1 = 6668.50391, loss2 = 45.23698
+Early stopping because there is no improvement
+old constant:  10.0
+new constant:  100.0
+[STATS][L2] iter = 100, loss = 8047.57479, loss1 = 7574.72656, loss2 = 472.84823
+[STATS][L2] iter = 200, loss = 8945.05092, loss1 = 8477.96680, loss2 = 467.08412
+Early stopping because there is no improvement
+old constant:  100.0
+new constant:  1000.0
+[STATS][L2] iter = 100, loss = 13815.78654, loss1 = 9850.79980, loss2 = 3964.98673
+[STATS][L2] iter = 200, loss = 14595.56782, loss1 = 11164.71973, loss2 = 3430.84809
+Early stopping because there is no improvement
+old constant:  1000.0
+new constant:  10000.0
+[STATS][L2] iter = 100, loss = 31323.13404, loss1 = 12682.94043, loss2 = 18640.19361
+[STATS][L2] iter = 200, loss = 23876.45568, loss1 = 14406.20215, loss2 = 9470.25353
+[STATS][L2] iter = 300, loss = 25157.22087, loss1 = 15905.41602, loss2 = 9251.80486
+Early stopping because there is no improvement
+old constant:  10000.0
+new constant:  100000.0
+[STATS][L2] iter = 100, loss = 57982.21132, loss1 = 17527.24219, loss2 = 40454.96914
+[STATS][L3](First valid attack found!) iter = 148, loss = 18308.26953, loss1 = 18308.26953, loss2 = 0.00000
+[STATS][L2] iter = 200, loss = 18734.63477, loss1 = 18734.63477, loss2 = 0.00000
+[STATS][L2] iter = 300, loss = 19527.76758, loss1 = 19527.76758, loss2 = 0.00000
+Early stopping because there is no improvement
+old constant:  100000.0
+new constant:  55000.0
+[STATS][L2] iter = 100, loss = 20303.98828, loss1 = 20303.98828, loss2 = 0.00000
+[STATS][L2] iter = 200, loss = 21082.65430, loss1 = 21082.65430, loss2 = 0.00000
+Early stopping because there is no improvement
+old constant:  55000.0
+new constant:  32500.0
+Took 5.932914789517721 mins to run 1 samples.
+Valid Classification:  [745]
+Adversarial Classification:  [811]
+Success Rate:  100.0
+Total distortion:  135.30805419948214

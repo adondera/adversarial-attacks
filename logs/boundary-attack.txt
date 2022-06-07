@@ -1,0 +1,114 @@
+Running on first 1 images 
+======== Image 0 =========
+Original label:  tensor([863], device='cuda:0')
+Predicted label:  tensor([863], device='cuda:0')
+Searching for the initial direction on 10 samples: 
+--------> Found distortion 167.7245 and g_theta = 0.2879
+--------> Found distortion 163.7646 and g_theta = 0.3687
+==========> Found best distortion 163.7646 and g_theta = 0.3687 in 23.2884 seconds using 602 queries
+Iteration  10 distortion 163.7576 query 622
+Iteration  20 distortion 163.7516 query 642
+Iteration  30 distortion 163.7506 query 662
+Iteration  40 distortion 163.7456 query 682
+Iteration  50 distortion 163.7406 query 702
+Iteration  60 distortion 163.7336 query 722
+Iteration  70 distortion 163.7266 query 742
+Iteration  80 distortion 163.7196 query 762
+Iteration  90 distortion 163.7126 query 782
+Iteration 100 distortion 163.7025 query 802
+Iteration 110 distortion 163.6996 query 822
+Iteration 120 distortion 163.6925 query 842
+Iteration 130 distortion 163.6825 query 862
+Iteration 140 distortion 163.6726 query 882
+Iteration 150 distortion 163.6686 query 902
+Iteration 160 distortion 163.6636 query 922
+Iteration 170 distortion 163.6546 query 942
+Iteration 180 distortion 163.6486 query 962
+Iteration 190 distortion 163.6416 query 982
+Iteration 200 distortion 163.6346 query 1002
+Iteration 210 distortion 163.6266 query 1022
+Iteration 220 distortion 163.6196 query 1042
+Iteration 230 distortion 163.6126 query 1062
+Iteration 240 distortion 163.6036 query 1082
+Iteration 250 distortion 163.5966 query 1102
+Iteration 260 distortion 163.5866 query 1122
+Iteration 270 distortion 163.5786 query 1142
+Iteration 280 distortion 163.5716 query 1162
+Iteration 290 distortion 163.5646 query 1182
+Iteration 300 distortion 163.5586 query 1202
+Iteration 310 distortion 163.5526 query 1222
+Iteration 320 distortion 163.5446 query 1242
+Iteration 330 distortion 163.5376 query 1262
+Iteration 340 distortion 163.5305 query 1282
+Iteration 350 distortion 163.5205 query 1302
+Iteration 360 distortion 163.5105 query 1322
+Iteration 370 distortion 163.5005 query 1342
+Iteration 380 distortion 163.4906 query 1362
+Iteration 390 distortion 163.4806 query 1382
+Iteration 400 distortion 163.4706 query 1402
+Iteration 410 distortion 163.4606 query 1422
+Iteration 420 distortion 163.4546 query 1442
+Iteration 430 distortion 163.4486 query 1462
+Iteration 440 distortion 163.4386 query 1482
+Iteration 450 distortion 163.4286 query 1502
+Iteration 460 distortion 163.4206 query 1522
+Iteration 470 distortion 163.4126 query 1542
+Iteration 480 distortion 163.4056 query 1562
+Iteration 490 distortion 163.3956 query 1582
+Iteration 500 distortion 163.3855 query 1602
+Iteration 510 distortion 163.3765 query 1622
+Iteration 520 distortion 163.3696 query 1642
+Iteration 530 distortion 163.3626 query 1662
+Iteration 540 distortion 163.3536 query 1682
+Iteration 550 distortion 163.3456 query 1702
+Iteration 560 distortion 163.3356 query 1722
+Iteration 570 distortion 163.3256 query 1742
+Iteration 580 distortion 163.3156 query 1762
+Iteration 590 distortion 163.3087 query 1782
+Iteration 600 distortion 163.3056 query 1802
+Iteration 610 distortion 163.2967 query 1822
+Iteration 620 distortion 163.2867 query 1842
+Iteration 630 distortion 163.2797 query 1862
+Iteration 640 distortion 163.2707 query 1882
+Iteration 650 distortion 163.2608 query 1902
+Iteration 660 distortion 163.2527 query 1922
+Iteration 670 distortion 163.2427 query 1942
+Iteration 680 distortion 163.2337 query 1962
+Iteration 690 distortion 163.2237 query 1982
+Iteration 700 distortion 163.2137 query 2002
+Iteration 710 distortion 163.2037 query 2022
+Iteration 720 distortion 163.1937 query 2042
+Iteration 730 distortion 163.1857 query 2062
+Iteration 740 distortion 163.1777 query 2082
+Iteration 750 distortion 163.1677 query 2102
+Iteration 760 distortion 163.1577 query 2122
+Iteration 770 distortion 163.1477 query 2142
+Iteration 780 distortion 163.1407 query 2162
+Iteration 790 distortion 163.1307 query 2182
+Iteration 800 distortion 163.1207 query 2202
+Iteration 810 distortion 163.1107 query 2222
+Iteration 820 distortion 163.1007 query 2242
+Iteration 830 distortion 163.0907 query 2262
+Iteration 840 distortion 163.0807 query 2282
+Iteration 850 distortion 163.0728 query 2302
+Iteration 860 distortion 163.0647 query 2322
+Iteration 870 distortion 163.0557 query 2342
+Iteration 880 distortion 163.0457 query 2362
+Iteration 890 distortion 163.0357 query 2382
+Iteration 900 distortion 163.0257 query 2402
+Iteration 910 distortion 163.0167 query 2422
+Iteration 920 distortion 163.0087 query 2442
+Iteration 930 distortion 163.0007 query 2462
+Iteration 940 distortion 162.9927 query 2482
+Iteration 950 distortion 162.9827 query 2502
+Iteration 960 distortion 162.9727 query 2522
+Iteration 970 distortion 162.9627 query 2542
+Iteration 980 distortion 162.9527 query 2562
+Iteration 990 distortion 162.9426 query 2582
+Iteration 1000 distortion 162.9346 query 2602
+
+Adversarial Example Found Successfully: distortion 162.9346 target 921 queries 1602 
+Time: 33.2122 seconds
+Predicted label for adversarial example:  tensor([611], device='cuda:0')
+Original label:  tensor([863], device='cuda:0')
+Breaking execution

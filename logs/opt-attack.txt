@@ -1,0 +1,31 @@
+Running on first 1 images 
+======== Image 0 =========
+Original label:  tensor([863], device='cuda:0')
+Predicted label:  tensor([863], device='cuda:0')
+Searching for the initial direction on 1000 samples: 
+Crossed patience, breaking execution
+--------> Found distortion 201.7089
+Crossed patience, breaking execution
+--------> Found distortion 189.8289
+Crossed patience, breaking execution
+--------> Found distortion 183.9066
+Crossed patience, breaking execution
+--------> Found distortion 178.6479
+Crossed patience, breaking execution
+--------> Found distortion 129.9370
+--------> Found distortion 122.9492
+--------> Found distortion 121.3196
+--------> Found distortion 114.1899
+--------> Found distortion 112.3833
+--------> Found distortion 100.5065
+--------> Found distortion 84.4631
+--------> Found distortion 75.3957
+==========> Found best distortion 75.3957 in 54.8167 seconds using 2660 queries
+Iteration  50: g(theta + beta*u) = 17.6957 g(theta) = 17.6914 distortion 17.6914 num_queries 9716
+Iteration 100: g(theta + beta*u) = 11.5505 g(theta) = 11.5513 distortion 11.5513 num_queries 19436
+
+Adversarial Example Found Successfully: distortion 11.5463 target 866 queries 22131 
+Time: 313.2971 seconds
+Predicted label for adversarial example:  tensor([866], device='cuda:0')
+Original label:  tensor([863], device='cuda:0')
+Breaking execution
