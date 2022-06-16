@@ -35,7 +35,8 @@ config["train_size"] = 2000
 config["test_size"] = 2000
 config["patch_size"] = 0.05
 
-wandb.init(project="adv-attacks", entity="adondera", config=config)
+# Change this to something
+wandb.init(project="placeholder", entity="placeholder", config=config)
 
 # Load the datasets
 train_loader, test_loader = dataloader(
