@@ -15,6 +15,7 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 model = models.resnet50(pretrained=True)
 model.eval()
+# Select an image to apply the patch to.
 image = Image.open('train/cat.4.jpg')
 patch = Image.open('best_patch.png')
 

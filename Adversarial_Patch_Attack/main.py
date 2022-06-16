@@ -31,8 +31,8 @@ model.to(device)
 model.eval()
 
 config = default_params()
-config["train_size"] = 4000
-config["test_size"] = 2000  # TODO Replace these with higher numbers
+config["train_size"] = 2000
+config["test_size"] = 2000
 config["patch_size"] = 0.05
 
 wandb.init(project="adv-attacks", entity="adondera", config=config)
@@ -68,7 +68,7 @@ for epoch in tqdm.tqdm(range(config["epochs"])):
                                                         config["probability_threshold"], model, config["lr"],
                                                         config["max_iteration"])
             changed_image = torch.from_numpy(changed_image).to(device)
-            output = model(changed_image)  # TODO: Look at image here
+            output = model(changed_image)
             _, changed_prediction = torch.max(output.data, 1)
             if changed_prediction[0].data.cpu().numpy() == config["target"]:
                 train_success += 1

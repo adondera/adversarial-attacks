@@ -107,6 +107,10 @@ for inputs, labels in tqdm.tqdm(test_loader):
     grayscale_cam = cam(input_tensor=normalized_perturbed_inputs, targets=targets)
     masks = get_masks(grayscale_cam)
 
+    # You can use these lines to test a theoretical best case scenario for this defense
+    # unnormalized_inputs[:, :, x:x + patch_tensor.shape[1], y:y + patch_tensor.shape[2]] = 0
+    # normalized_masked_images = normalize(unnormalized_inputs)
+
     masked_images = unnormalized_inputs * masks
     normalized_masked_images = normalize(masked_images)
 

@@ -7,19 +7,16 @@ import torch
 
 
 # Initialize the patch
-# TODO: Add circle type
 def patch_initialization(patch_type='rectangle', image_size=(3, 224, 224), noise_percentage=0.03):
     if patch_type == 'rectangle':
         mask_length = int((noise_percentage * image_size[1] * image_size[2]) ** 0.5)
         patch = np.random.rand(image_size[0], mask_length, mask_length)
-        # TODO: Change this to torch instead and move to device
     else:
         raise NotImplementedError
     return patch
 
 
 # Generate the mask and apply the patch
-# TODO: Add circle type
 def mask_generation(mask_type='rectangle', patch=None, image_size=(3, 224, 224)):
     applied_patch = np.zeros(image_size)
     if mask_type == 'rectangle':
@@ -40,7 +37,6 @@ def mask_generation(mask_type='rectangle', patch=None, image_size=(3, 224, 224))
 
 
 # Test the patch on dataset
-# TODO: Check this function
 def test_patch(patch_type, target, patch, test_loader, model):
     model.eval()
     test_actual_total, test_success = 0, 0
